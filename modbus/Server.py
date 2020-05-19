@@ -53,10 +53,10 @@ def updating_writer(a):
     """
     log.debug("updating the context")
     context = a[0]
-    sensor_erdgeschoss = round((random.uniform(20.00, 21.00)),2)  #temperatur_erdgeschoss (2 nachkommastellen)
-    add_item_float_16_bit(sensor_erdgeschoss, context=context, address= 0x10)
-    sensor_arbeitszimmer = round((random.uniform(22.00, 23.00)),2)  # temperatur_arbeitszimmer
-    add_item_float_16_bit(sensor_arbeitszimmer, context=context, address=0x11)
+    sensor_erdgeschoss = random.randint(2000, 2100) #temperatur_erdgeschoss (2 nachkommastellen)
+    add_item(sensor_erdgeschoss, context=context, address= 0x10)
+    sensor_arbeitszimmer = random.randint(2200, 2300)  # temperatur_arbeitszimmer
+    add_item(sensor_arbeitszimmer, context=context, address=0x11)
 
 
 
@@ -76,11 +76,11 @@ def run_updating_server():
 
     #hier werden die Aktoren hinzugefügt
     klingel = 0
-    add_item_bit(klingel, context=context, address=0x16, register=3)
+    add_item(klingel, context=context, address=0x16, register=3)
     fenster_1, fenster_2, fenster_3 = 0, 0, 0
-    add_item_bit(fenster_1, context=context, address=0x20, register= 3)
-    add_item_bit(fenster_2, context=context, address=0x21, register= 3)
-    add_item_bit(fenster_3, context=context, address=0x22, register= 3)
+    add_item(fenster_1, context=context, address=0x20, register= 3)
+    add_item(fenster_2, context=context, address=0x21, register= 3)
+    add_item(fenster_3, context=context, address=0x22, register= 3)
 
     #
 
@@ -93,13 +93,13 @@ def run_updating_server():
     StartTcpServer(context, address=("localhost", 5020))
 
 #fügt einen Sensor einer Adresse im 4 Register zu
-def add_item_float_16_bit(sensor, address, context, slave_id = 0x00, register=4):
-    builder = BinaryPayloadBuilder(byteorder=Endian.Big, wordorder=Endian.Big)
-    builder.add_16bit_float(sensor)
-    payload = builder.to_registers()
-    context[slave_id].setValues(register, address, payload)
-    builder.reset()
-def add_item_bit(sensor, address, context, slave_id = 0x00, register=4):
+# def add_item_float_16_bit(sensor, address, context, slave_id = 0x00, register=4):
+#     builder = BinaryPayloadBuilder(byteorder=Endian.Big, wordorder=Endian.Big)
+#     builder.add_16bit_float(sensor)
+#     payload = builder.to_registers()
+#     context[slave_id].setValues(register, address, payload)
+#     builder.reset()
+def add_item(sensor, address, context, slave_id = 0x00, register=4):
 
     values = [sensor]
     context[slave_id].setValues(register, address,values)

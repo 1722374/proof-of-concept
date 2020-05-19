@@ -31,6 +31,7 @@ def write_data():
 @app.route('/fenster_öffnen/<adresse>')
 def fenster_öffnen(adresse):
     adresse = int(adresse, 16)
+    print(adresse)
     Client.aktor_triggern(adresse= adresse,value=1)
     data = Client.get_daten(gruppe="fenster")
     print(data)
