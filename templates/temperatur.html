@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>temperatur</title>
+</head>
+<body>
+    {% for gruppe in daten %}
+        {{ gruppe }}: <br>
+        {% for wert in daten[gruppe] %}
+            {{ wert }} : {{ daten[gruppe][wert] }} <br>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>
