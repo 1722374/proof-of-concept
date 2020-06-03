@@ -54,17 +54,17 @@ def updating_writer(a):
     log.debug("updating the context")
     context = a[0]
     sensor_erdgeschoss = random.randint(2000, 2100) #temperatur_erdgeschoss (2 nachkommastellen)
-    add_item(sensor_erdgeschoss, context=context, address= 0x10)
+    add_item(sensor_erdgeschoss, context=context, register= 4, address= 0x10)
     sensor_arbeitszimmer = random.randint(2200, 2300)  # temperatur_arbeitszimmer
-    add_item(sensor_arbeitszimmer, context=context, address=0x11)
+    add_item(sensor_arbeitszimmer, context=context, register=4, address=0x11)
 
 
 
-def run_updating_server():
+def run_modbus_server():
     # ----------------------------------------------------------------------- #
     # initialize your data store
     # ----------------------------------------------------------------------- #
-
+    print("Starte Modbus Server....")
 
 
     store = ModbusSlaveContext(
@@ -75,8 +75,8 @@ def run_updating_server():
     context = ModbusServerContext(slaves=store, single=True)
 
     #hier werden die Aktoren hinzugefügt
-    klingel = 0
-    add_item(klingel, context=context, address=0x16, register=3)
+    jalousie_erdgeschoss = 100
+    add_item(jalousie_erdgeschoss, context=context, address=0x16, register=3)
     fenster_1, fenster_2, fenster_3 = 0, 0, 0
     add_item(fenster_1, context=context, address=0x20, register= 3)
     add_item(fenster_2, context=context, address=0x21, register= 3)
@@ -92,18 +92,10 @@ def run_updating_server():
     loop.start(time, now=False)  # initially delay by time
     StartTcpServer(context, address=("localhost", 5020))
 
-#fügt einen Sensor einer Adresse im 4 Register zu
-# def add_item_float_16_bit(sensor, address, context, slave_id = 0x00, register=4):
-#     builder = BinaryPayloadBuilder(byteorder=Endian.Big, wordorder=Endian.Big)
-#     builder.add_16bit_float(sensor)
-#     payload = builder.to_registers()
-#     context[slave_id].setValues(register, address, payload)
-#     builder.reset()
-def add_item(sensor, address, context, slave_id = 0x00, register=4):
+def add_item(sensor, register, address, context, slave_id = 0x00):
 
     values = [sensor]
     context[slave_id].setValues(register, address,values)
 
-
 if __name__ == "__main__":
-    run_updating_server()
+    run_modbus_server()

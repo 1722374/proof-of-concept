@@ -1,0 +1,13 @@
+{
+  "IFTTT1": "http://127.0.0.1:5000/alle_daten",
+  "IFTTT2": "http://127.0.0.1:5000/temp_daten",
+  "IFTTT3": "http://127.0.0.1:5000/fenster/?adresse=0x20&value=1",
+  "IFTTT4": "http://127.0.0.1:5000/fenster/?adresse=0x21&value=1",
+  "IFTTT5": "http://127.0.0.1:5000/fenster/?adresse=0x22&value=1",
+  "IFTTT6": "http://127.0.0.1:5000/fenster/?gruppe=fenster&value=1",
+  "IFTTT7": "http://127.0.0.1:5000/fenster/?adresse=0x20&value=0",
+  "IFTTT8": "http://127.0.0.1:5000/fenster/?adresse=0x21&value=0",
+  "IFTTT9": "http://127.0.0.1:5000/fenster/?adresse=0x22&value=0",
+  "IFTTT10": "http://127.0.0.1:5000/fenster/?gruppe=fenster&value=0",
+  "IFTTT11": "http://127.0.0.1:5000/write_data"
+}

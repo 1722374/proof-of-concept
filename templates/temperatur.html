@@ -3,13 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>temperatur</title>
+    <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+</style>
 </head>
 <body>
-    {% for gruppe in daten %}
-        {{ gruppe }}: <br>
+    <table style="border-collapse: collapse; width: 100%">
+        <tr>
+
+                <th style="border: 1px solid">Sensor/Aktor Gruppe</th>
+                <th style="border: 1px solid">Item</th>
+                <th style="border: 1px solid">Wert</th>
+        </tr>
+
+        {% for gruppe in daten %}
+
         {% for wert in daten[gruppe] %}
-            {{ wert }} : {{ daten[gruppe][wert] }} <br>
+            <tr>
+            <td>{{ gruppe }}</td>
+            <td>{{ wert }} </td>
+            <td>{{ daten[gruppe][wert] }}</td>
         {% endfor %}
+            </tr>
     {% endfor %}
+
+    </table>
+
 </body>
 </html>

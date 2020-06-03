@@ -1,6 +1,6 @@
 from flask import Flask
 from modbus import Client
-from flask import render_template
+from flask import render_template, request
 from influx import influx_db
 app = Flask(__name__)
 
@@ -25,19 +25,24 @@ def alle_daten():
 def write_data():
     data = Client.get_daten()
     print(data)
-    influx_db.write_to_database_all(data)
+    influx_db.write_to_database(data)
     return render_template('temperatur.html', daten=data)
 
-@app.route('/fenster_öffnen/<adresse>')
-def fenster_öffnen(adresse):
-    adresse = int(adresse, 16)
-    print(adresse)
-    Client.aktor_triggern(adresse= adresse,value=1)
+@app.route('/fenster/')
+def fenster():
+
+    adresse = None if request.args.get('adresse') is None else int(request.args.get('adresse'),16)
+    gruppe = request.args.get('gruppe')
+    value = int(request.args.get('value'))
+    Client.aktor_triggern(adresse= adresse, gruppe= gruppe, value=value)
     data = Client.get_daten(gruppe="fenster")
     print(data)
-    influx_db.write_to_database_all(data)
+    influx_db.write_to_database(data)
     return render_template('temperatur.html', daten=data)
+
+
 
 
 if __name__ == '__main__':
+    print("Starte Flask Server")
     app.run()
