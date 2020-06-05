@@ -39,6 +39,11 @@ td, th {
     {% endfor %}
 
     </table>
+<p>
+{% if dates|length > 0 %}
+    Die Fenster sollten zu folgenden Daten geschlossen: {% for date in dates %} {{ date }}; {% endfor %}
+{% endif %}
 
+</p>
 </body>
 </html>

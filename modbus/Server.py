@@ -60,7 +60,7 @@ def updating_writer(a):
 
 
 
-def run_modbus_server():
+def starte_modbus_server():
     # ----------------------------------------------------------------------- #
     # initialize your data store
     # ----------------------------------------------------------------------- #
@@ -98,4 +98,4 @@ def add_item(sensor, register, address, context, slave_id = 0x00):
     context[slave_id].setValues(register, address,values)
 
 if __name__ == "__main__":
-    run_modbus_server()
+    starte_modbus_server()

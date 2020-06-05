@@ -55,7 +55,10 @@ def aktor_triggern(value, items_dict =items, gruppe=None, adresse=None):
 
 
 
+
+
 #aktor_triggern(adresse=0x21,value=1)
 #aktor_triggern(gruppe="fenster", value=0)
 #aktor_triggern(1, 33)
 #print(get_daten())
+

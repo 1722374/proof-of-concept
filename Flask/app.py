@@ -2,6 +2,8 @@ from flask import Flask
 from modbus import Client
 from flask import render_template, request
 from influx import influx_db
+from weather_data import weather_data
+from modbus import data_poller
 app = Flask(__name__)
 
 
@@ -36,13 +38,18 @@ def fenster():
     value = int(request.args.get('value'))
     Client.aktor_triggern(adresse= adresse, gruppe= gruppe, value=value)
     data = Client.get_daten(gruppe="fenster")
-    print(data)
     influx_db.write_to_database(data)
-    return render_template('temperatur.html', daten=data)
+    dates = weather_data.get_rain_date("week", True)
+    return render_template('temperatur.html', daten=data, dates = dates)
 
 
 
 
 if __name__ == '__main__':
+    print("Starte Flask Server")
+    app.run()
+
+data_poller.poll_data(60, Client.get_daten, influx_db.write_to_database)
+def starte_flask_server():
     print("Starte Flask Server")
     app.run()
